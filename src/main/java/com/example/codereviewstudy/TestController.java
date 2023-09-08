@@ -1,5 +1,5 @@
 package com.example.codereviewstudy;
 
-public class TestContorller {
+public class TestController {
   String woojin = "";
 }
