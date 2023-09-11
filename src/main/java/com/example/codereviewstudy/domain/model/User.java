@@ -1,19 +1,9 @@
 package com.example.codereviewstudy.domain.model;
 
 import java.time.LocalDateTime;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
-
-@Entity
-@Table(name = "users")
 public class User {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
   private String loginId;
@@ -46,24 +36,10 @@ public class User {
     return updatedAt;
   }
 
-  public void setId(long userId) {
-    this.id = userId;
-  }
-
-
-  public void setPassword(String password) {
+  public void createUser(Long id, String loginId, String password, LocalDateTime createdAt) {
+    this.id = id;
+    this.loginId = loginId;
     this.password = password;
-  }
-
-  public void setLoginId(String email) {
-    this.loginId = email;
-  }
-
-  public void setCreatedAt(LocalDateTime createdAt) {
     this.createdAt = createdAt;
-  }
-
-  public void setUpdatedAt(LocalDateTime updatedAt) {
-    this.updatedAt = updatedAt;
   }
 }

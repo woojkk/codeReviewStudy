@@ -1,10 +1,13 @@
 package com.example.codereviewstudy.domain.repository;
 
 import com.example.codereviewstudy.domain.model.User;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import java.util.Optional;
 
-@Repository
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface UserRepository {
+
   boolean existsByLoginId(String loginId);
+
+  Optional<User> findById(Long id);
+
+  User save(User user);
 }

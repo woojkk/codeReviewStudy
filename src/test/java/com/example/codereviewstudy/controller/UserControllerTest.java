@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.example.codereviewstudy.domain.model.User;
 import com.example.codereviewstudy.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -37,9 +38,7 @@ class UserControllerTest {
   @Test
   public void signupUserTest() throws Exception {
     User testUser = new User();
-    testUser.setId(1L);
-    testUser.setLoginId("test");
-    testUser.setPassword("123");
+    testUser.createUser(1L, "test", "123", LocalDateTime.now());
 
     given(userService.signupUser(any()))
         .willReturn(testUser);
@@ -62,9 +61,7 @@ class UserControllerTest {
   public void searchUserTest() throws Exception {
 
     User testUser = new User();
-    testUser.setId(1L);
-    testUser.setLoginId("test");
-    testUser.setPassword("123");
+    testUser.createUser(1L, "test", "123", LocalDateTime.now());
 
     when(userService.searchUser(1))
         .thenReturn(testUser);
@@ -72,9 +69,8 @@ class UserControllerTest {
     mockMvc.perform(MockMvcRequestBuilders.get("/users/{userId}", 1L)
             .param("loginId", "test"))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.id").value(1))
+        .andExpect(jsonPath("$.userId").value(1))
         .andExpect(jsonPath("$.loginId").value("test"))
-        .andExpect(jsonPath("$.password").value("123"))
         .andDo(print());
   }
 }

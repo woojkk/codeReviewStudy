@@ -3,14 +3,13 @@ package com.example.codereviewstudy.service;
 import com.example.codereviewstudy.domain.dto.SignupForm;
 import com.example.codereviewstudy.domain.model.User;
 import com.example.codereviewstudy.domain.repository.UserRepository;
-import com.example.codereviewstudy.exception.CustomException;
-import com.example.codereviewstudy.exception.UserErrorCode;
 import java.time.LocalDateTime;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
   private final UserRepository userRepository;
+  private long newId = 0;
 
   public UserService(UserRepository userRepository) {
     this.userRepository = userRepository;
@@ -18,22 +17,20 @@ public class UserService {
 
   public User signupUser(SignupForm signupForm) {
 
-    if (userRepository.existsByLoginId(signupForm.getLoginId())) {
-      throw new CustomException(UserErrorCode.ALREADY_EXIST_LOGINID);
+    boolean isLoginId = userRepository.existsByLoginId(signupForm.getLoginId());
+    if (isLoginId) {
+      throw new RuntimeException("이미 해당 아이디가 존재합니다.");
     }
 
     User user = new User();
-    String loginId = signupForm.getLoginId();
-    String password = signupForm.getPassword();
-    user.setLoginId(loginId);
-    user.setPassword(password);
-    user.setCreatedAt(LocalDateTime.now());
+    newId++;
+    user.createUser(newId, signupForm.getLoginId(),signupForm.getPassword(),LocalDateTime.now());
 
     return userRepository.save(user);
   }
 
   public User searchUser(long userId) {
     return userRepository.findById(userId)
-        .orElseThrow(() -> new CustomException(UserErrorCode.NOT_FOUND_LOGINID));
+        .orElseThrow(() -> new RuntimeException("해당 아이디를 찾을 수 없습니다."));
   }
 }
