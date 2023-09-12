@@ -4,14 +4,19 @@ import com.example.codereviewstudy.domain.model.User;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository{
   private final Map<Long, User> userMap = new HashMap<>();
+  private final AtomicLong currentUserId = new AtomicLong();
+
   @Override
   public User save(User user) {
-    userMap.put(user.getId(), user);
+    long userId = this.currentUserId.incrementAndGet();
+    user.createUserId(userId);
+    userMap.put(userId, user);
     return user;
   }
 

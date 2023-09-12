@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
   private final UserRepository userRepository;
-  private long newId = 0;
 
   public UserService(UserRepository userRepository) {
     this.userRepository = userRepository;
@@ -23,8 +22,7 @@ public class UserService {
     }
 
     User user = new User();
-    newId++;
-    user.createUser(newId, signupForm.getLoginId(),signupForm.getPassword(),LocalDateTime.now());
+    user.createUser(user.getId(), signupForm.getLoginId(),signupForm.getPassword(),LocalDateTime.now());
 
     return userRepository.save(user);
   }

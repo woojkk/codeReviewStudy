@@ -42,4 +42,8 @@ public class User {
     this.password = password;
     this.createdAt = createdAt;
   }
+
+  public void createUserId(Long userId) {
+    this.id = userId;
+  }
 }
