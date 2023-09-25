@@ -6,29 +6,26 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.example.codereviewstudy.domain.model.User;
+import com.example.codereviewstudy.domain.repository.UserRepository;
 import com.example.codereviewstudy.domain.repository.UserRepositoryImpl;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class UserControllerSpringBootTest {
+class UserRepositoryTest {
 
-  @Autowired
-  private UserRepositoryImpl userRepository;
+  private UserRepository userRepository;
 
   @BeforeEach
-  public void repository() {
+  public void setUp() {
     userRepository = new UserRepositoryImpl();
   }
 
   @Test
   @DisplayName("회원 가입")
-  public void signupUserTest() {
+  void signupUserTest() {
     User user = new User();
     user.createUser(1L, "test", "1234", LocalDateTime.now());
     User saveUser = userRepository.save(user);
@@ -46,7 +43,7 @@ class UserControllerSpringBootTest {
 
   @Test
   @DisplayName("사용자 조회")
-  public void searchUserTest() {
+  void searchUserTest() {
     User user = new User();
     user.createUser(1L, "test", "1234", LocalDateTime.now());
     User saveUser = userRepository.save(user);
@@ -56,8 +53,7 @@ class UserControllerSpringBootTest {
 
     assertThat(findUser.getId()).isEqualTo(user.getId());
 
-    assertThrows(RuntimeException.class, () ->
-        userRepository.findById(100L)
+    assertThrows(RuntimeException.class, () -> userRepository.findById(100L)
             .orElseThrow(() -> new RuntimeException("아이디가 존재하지 않습니다.")));
 
     Assertions.assertEquals(saveUser.getId(), user.getId());

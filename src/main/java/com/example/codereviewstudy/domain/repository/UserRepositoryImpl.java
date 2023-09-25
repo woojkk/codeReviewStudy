@@ -21,6 +21,16 @@ public class UserRepositoryImpl implements UserRepository{
   }
 
   @Override
+  public void delete(User user) {
+    userMap.remove(user.getId());
+  }
+
+  @Override
+  public void deleteAll() {
+    userMap.clear();
+  }
+
+  @Override
   public boolean existsByLoginId(String loginId) {
     return userMap.values().stream()
         .anyMatch(user -> user.getLoginId().equals(loginId));

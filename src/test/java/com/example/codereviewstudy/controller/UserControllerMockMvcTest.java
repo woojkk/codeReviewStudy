@@ -37,7 +37,7 @@ class UserControllerMockMvcTest {
 
   @Test
   @DisplayName("회원 가입")
-  public void signupUserTest() throws Exception {
+  void signupUserTest() throws Exception {
     User user = new User();
     user.createUser(1L, "test", "123", LocalDateTime.now());
 
@@ -58,7 +58,7 @@ class UserControllerMockMvcTest {
 
   @Test
   @DisplayName("회원 조회")
-  public void searchUserTest() throws Exception {
+  void searchUserTest() throws Exception {
 
     User testUser = new User();
     testUser.createUser(1L, "test", "123", LocalDateTime.now());

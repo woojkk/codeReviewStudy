@@ -11,4 +11,9 @@ public class SignupForm {
   public String getPassword() {
     return password;
   }
+
+  public SignupForm(String loginId, String password) {
+    this.loginId = loginId;
+    this.password = password;
+  }
 }

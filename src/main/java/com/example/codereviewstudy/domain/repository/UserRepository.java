@@ -10,4 +10,8 @@ public interface UserRepository {
   Optional<User> findById(Long id);
 
   User save(User user);
+
+  void delete(User user);
+
+  void deleteAll();
 }
